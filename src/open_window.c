@@ -58,18 +58,17 @@ sfVertexArray *create_textured_quad(sfVector2f p1, sfVector2f p2, sfVector2f p3,
 
     if (!quad || !texture)
         return NULL;
-    sfVertex v1 = {.position = p1, .texCoords = {0, 0}};
-    sfVertex v2 = {.position = p2, .texCoords = {64, 0}};
-    sfVertex v3 = {.position = p3, .texCoords = {64, 64}};
-    sfVertex v4 = {.position = p4, .texCoords = {0, 64}};
+    sfVertex v1 = {.position = p1, .color = sfWhite, .texCoords = {0, 0}};
+    sfVertex v2 = {.position = p2, .color = sfWhite, .texCoords = {5184, 0}};
+    sfVertex v3 = {.position = p3, .color = sfWhite, .texCoords = {5184, 3456}};
+    sfVertex v4 = {.position = p4, .color = sfWhite, .texCoords = {0, 3456}};
 
     sfVertexArray_append(quad, v1);
     sfVertexArray_append(quad, v2);
     sfVertexArray_append(quad, v3);
-    sfVertexArray_append(quad, v4);
-    sfVertexArray_append(quad, v1); // Boucle fermée
+    sfVertexArray_append(quad, v4); // Boucle fermée
 
-    sfVertexArray_setPrimitiveType(quad, sfTriangleFan);
+    sfVertexArray_setPrimitiveType(quad, sfQuads);
     return quad;
 }
 
@@ -157,8 +156,7 @@ int open_entry_window(void)
     sfEvent event;
     int **map = create_map_rand();
     sfVector2f **my_2d_map = create_2d_map(map, SIZE_OF_MAP, SIZE_OF_MAP);
-    sfIntRect rect = {0, 0, 64, 64};
-    sfTexture *texture = sfTexture_createFromFile("herbe.jpg", &rect);
+    sfTexture *texture = sfTexture_createFromFile("herbe.jpg", NULL);
 
     sfRenderWindow_setFramerateLimit(win, 60);
     while (sfRenderWindow_isOpen(win)) {
