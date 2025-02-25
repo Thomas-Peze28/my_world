@@ -8,10 +8,13 @@
 #include <SFML/Graphics.h>
 #include "window.h"
 #include <math.h>
+#include <stdio.h>
+
+// camera : when key pressed : '<' ANGLE_X --, '^' ANGLE_Y --, '>' ANGLE_X ++, '⬇️' ANGLE_Y ++
 
 static sfVector2f project_iso_point(int x, int y, int z)
 {
-    sfVector2f point_2d;
+    sfVector2f point_2d = {0.0, 0.0};
 
     point_2d.x = cos(ANGLE_X) * x - cos(ANGLE_X) * y;
     point_2d.y = sin(ANGLE_Y) * y + sin(ANGLE_Y) * x - z;
@@ -32,7 +35,7 @@ static sfVector2f **create_2d_map(int **map, int width, int height)
             return NULL;
         for (int x = 0; x < width; x++) {
             projected = project_iso_point(x * TILE_SIZE, y * TILE_SIZE,
-                map[y][x] * 10);
+                map[y][x] * 5);
             projected.x += offset_x;
             map_2d[y][x] = projected;
         }
@@ -55,7 +58,7 @@ static sfVertexArray *create_line(sfVector2f *point1, sfVector2f *point2)
 }
 
 sfVertexArray *create_textured_quad(sfVector2f p1, sfVector2f p2,
-    sfVector2f p3, sfVector2f p4, sfTexture *texture)
+    sfVector2f p3, sfVector2f p4)
 {
     sfColor color = sfWhite;
     sfVertexArray *quad = sfVertexArray_create();
@@ -64,7 +67,7 @@ sfVertexArray *create_textured_quad(sfVector2f p1, sfVector2f p2,
     sfVertex v3 = {.position = p3, .color = color, .texCoords = {5184, 3456}};
     sfVertex v4 = {.position = p4, .color = color, .texCoords = {0, 3456}};
 
-    if (!quad || !texture)
+    if (!quad)
         return NULL;
     sfVertexArray_append(quad, v1);
     sfVertexArray_append(quad, v2);
@@ -103,8 +106,7 @@ int draw_quads(sfVector2i id, sfRenderWindow *window, sfVector2f **map_2d,
     if (id.x < SIZE_OF_MAP - 1 && id.y < SIZE_OF_MAP - 1) {
         quad = create_textured_quad(
             map_2d[id.y][id.x], map_2d[id.y][id.x + 1],
-            map_2d[id.y + 1][id.x + 1], map_2d[id.y + 1][id.x],
-            texture);
+            map_2d[id.y + 1][id.x + 1], map_2d[id.y + 1][id.x]);
         if (quad) {
             sfRenderWindow_drawVertexArray(window, quad, &states);
             sfVertexArray_destroy(quad);
@@ -127,26 +129,38 @@ int draw_2d_map(sfRenderWindow *window, sfVector2f **map_2d,
     return 0;
 }
 
-static void analyse_events(sfRenderWindow *win, sfEvent *event,
-    sfVector2f **my_2d_map)
+static int analyse_events(sfRenderWindow *win, sfEvent *event,
+    int mouse_pressed)
 {
     if (event->type == sfEvtClosed)
         sfRenderWindow_close(win);
-    if (event->type == sfEvtKeyPressed) {
-        if (event->key.code == sfKeyUp)
-            my_2d_map[7][7].y -= 5;
-        if (event->key.code == sfKeyDown)
-            my_2d_map[7][7].y += 5;
-    }
+    if (event->type == sfEvtMouseButtonPressed)
+        mouse_pressed = 1;
+    if (event->type == sfEvtMouseButtonReleased)
+        mouse_pressed = 0;
+    return mouse_pressed;
 }
 
-void while_window_open(sfRenderWindow *win, sfEvent event,
-    sfVector2f **my_2d_map, sfTexture *texture)
+int while_window_open(sfRenderWindow *win, sfEvent event,
+    sfVector2f **my_2d_map, sfTexture *texture, int mouse_pressed)
 {
+    sfVector2i mouse_pos = sfMouse_getPositionRenderWindow(win);
+
     while (sfRenderWindow_pollEvent(win, &event))
-        analyse_events(win, &event, my_2d_map);
+        mouse_pressed = analyse_events(win, &event, mouse_pressed);
+    if (mouse_pressed == 1) {
+        for (int y = 0; y < SIZE_OF_MAP; y++) {
+            for (int x = 0; x < SIZE_OF_MAP; x++) { 
+                if (((my_2d_map[y][x].x - mouse_pos.x) * (my_2d_map[y][x].x - mouse_pos.x)) +
+                    ((my_2d_map[y][x].y - mouse_pos.y) * (my_2d_map[y][x].y - mouse_pos.y)) <=
+                    ((TILE_SIZE + TILE_SIZE) * (TILE_SIZE + TILE_SIZE)))
+                    my_2d_map[y][x].y -= 2;
+            }
+        }
+    }
     draw_2d_map(win, my_2d_map, texture);
     sfRenderWindow_display(win);
+    return mouse_pressed;
 }
 
 static int **create_map_rand(void)
@@ -156,7 +170,7 @@ static int **create_map_rand(void)
     for (int i = 0; i < SIZE_OF_MAP; i++) {
         map[i] = malloc(sizeof(int) * SIZE_OF_MAP);
         for (int j = 0; j < SIZE_OF_MAP; j++)
-            map[i][j] = rand() % 10 - 5;
+            map[i][j] = rand() % 16 - 8;
     }
     return map;
 }
@@ -168,12 +182,13 @@ int open_entry_window(void)
     sfEvent event;
     int **map = create_map_rand();
     sfVector2f **my_2d_map = create_2d_map(map, SIZE_OF_MAP, SIZE_OF_MAP);
-    sfTexture *texture = sfTexture_createFromFile("herbe.jpg", NULL);
+    sfTexture *texture = sfTexture_createFromFile("assets/herbe.jpg", NULL);
+    int mouse_pressed = 0;
 
     sfRenderWindow_setFramerateLimit(win, 60);
     while (sfRenderWindow_isOpen(win)) {
         sfRenderWindow_clear(win, sfBlack);
-        while_window_open(win, event, my_2d_map, texture);
+        mouse_pressed = while_window_open(win, event, my_2d_map, texture, mouse_pressed);
     }
     my_destroy(win, my_2d_map);
     return 0;
