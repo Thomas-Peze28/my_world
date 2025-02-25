@@ -7,17 +7,12 @@
 
 SRC	=	src/main.c			\
 		src/open_window.c	\
-		src/my_destroy.c	\
-		# init_button.c	\
-		# is_clicked.c	\
-		# management.c	\
-		# is_hover.c
+		src/my_destroy.c
 
 OBJ	=	$(SRC:.c=.o)
 
 NAME	=	window
 
-CFLAGS = 
 CFLAGS = -Wextra -Wall -Werror -I ./include -l csfml-graphics -l csfml-system \
 	-l csfml-window -l csfml-audio
 
