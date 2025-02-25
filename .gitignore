@@ -1,0 +1,15 @@
+*~
+*.o
+*.so
+a.out
+*libmy.a
+*#
+*.a
+*.sa
+*.txt
+vgcore*
+coding*
+.vscode
+test.c
+unit_tests*
+window
