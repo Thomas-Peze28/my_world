@@ -18,10 +18,8 @@
     #include <unistd.h>
     #include <stdlib.h>
     #define M_PI 3.14159265358979323846
-    #define TILE_SIZE 40
     #define WINDOW_WIDTH 1920
     #define WINDOW_HEIGHT 1080
-    #define SIZE_OF_MAP 30
 
 typedef struct window_s {
     int tile_size;

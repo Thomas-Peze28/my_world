@@ -7,13 +7,13 @@
 
 #include "window.h"
 
-static int **create_map_rand(void)
+static int **create_map_rand(int size)
 {
-    int **map = malloc(sizeof(int *) * SIZE_OF_MAP);
+    int **map = malloc(sizeof(int *) * size);
 
-    for (int i = 0; i < SIZE_OF_MAP; i++) {
-        map[i] = malloc(sizeof(int) * SIZE_OF_MAP);
-        for (int j = 0; j < SIZE_OF_MAP; j++)
+    for (int i = 0; i < size; i++) {
+        map[i] = malloc(sizeof(int) * size);
+        for (int j = 0; j < size; j++)
             map[i][j] = rand() % 16 - 8;
     }
     return map;
@@ -48,8 +48,8 @@ window_t *create_struct(void)
 
     win->angle_x = 4.00;
     win->angle_y = 5.14;
-    win->map = create_map_rand();
     win->size_of_map = 30;
+    win->map = create_map_rand(win->size_of_map);
     win->tile_size = 40;
     win->map_2d = create_2d_map(win, (M_PI / win->angle_x),
         (M_PI / win->angle_y));
