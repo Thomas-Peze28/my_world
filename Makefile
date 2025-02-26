@@ -7,14 +7,17 @@
 
 SRC	=	src/main.c			\
 		src/open_window.c	\
-		src/my_destroy.c
+		src/my_destroy.c	\
+		src/create_struct.c	\
+		src/rotations.c	\
+		src/draw_map.c
 
 OBJ	=	$(SRC:.c=.o)
 
 NAME	=	window
 
 CFLAGS = -Wextra -Wall -Werror -I ./include -l csfml-graphics -l csfml-system \
-	-l csfml-window -l csfml-audio
+	-l csfml-window -l csfml-audio -lm
 
 all:	$(NAME)
 
