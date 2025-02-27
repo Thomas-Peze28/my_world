@@ -8,13 +8,13 @@
 #include <SFML/Graphics.h>
 #include "window.h"
 
-void my_destroy(sfRenderWindow *win, sfVector2f **map_2d, int **map)
+void my_destroy(window_t *win)
 {
-    for (int i = 0; i < SIZE_OF_MAP; i++) {
-        free(map[i]);
-        free(map_2d[i]);
+    for (int i = 0; i < win->size_of_map; i++) {
+        free(win->map[i]);
+        free(win->map_2d[i]);
     }
-    free(map);
-    free(map_2d);
-    sfRenderWindow_destroy(win);
+    free(win->map);
+    free(win->map_2d);
+    sfRenderWindow_destroy(win->win);
 }

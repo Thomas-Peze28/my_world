@@ -35,7 +35,7 @@ typedef struct window_s {
 } window_t;
 
 
-void my_destroy(sfRenderWindow *win, sfVector2f **map_2d, int **map);
+void my_destroy(window_t *win);
 sfVector2f project_iso_point(sfVector3f v, double angle_x,
     double angle_y, int center);
 int draw_2d_map(window_t *win, sfTexture *texture);

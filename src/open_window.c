@@ -98,6 +98,6 @@ int open_entry_window(void)
         sfRenderWindow_clear(win->win, sfBlack);
         win->mouse_pressed = while_window_open(win, event, texture);
     }
-    my_destroy(win->win, win->map_2d, win->map);
+    my_destroy(win);
     return 0;
 }
