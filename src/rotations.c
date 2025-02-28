@@ -7,7 +7,7 @@
 
 #include "window.h"
 
-static sfVector2f **rotate_map(window_t *win)
+sfVector2f **rotate_map(window_t *win)
 {
     sfVector2f projected = {0.0, 0.0};
     int offset_x = WINDOW_WIDTH / 4;
@@ -15,15 +15,20 @@ static sfVector2f **rotate_map(window_t *win)
 
     for (int y = 0; y < win->size_of_map; y++) {
         for (int x = 0; x < win->size_of_map; x++) {
-            projected = project_iso_point((sfVector3f){x * win->tile_size,
-                y * win->tile_size, win->map[y][x] * 5}, win->angle_x,
-                win->angle_y, center);
+            sfVector3f point_3d = (sfVector3f){
+                x * win->tile_size, 
+                y * win->tile_size, 
+                win->map[y][x] * 5
+            };
+            projected = project_iso_point(point_3d, win->angle_x, win->angle_y, center);
             projected.x += offset_x;
             win->map_2d[y][x] = projected;
         }
     }
+
     return win->map_2d;
 }
+
 
 window_t *handle_rotations(sfEvent *event, window_t *win)
 {

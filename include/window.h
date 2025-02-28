@@ -17,9 +17,11 @@
     #include <SFML/Window.h>
     #include <unistd.h>
     #include <stdlib.h>
+    #include <math.h>
     #define M_PI 3.14159265358979323846
     #define WINDOW_WIDTH 1920
     #define WINDOW_HEIGHT 1080
+    #define SIZE_OF_MAP 30
 
 typedef struct window_s {
     int tile_size;
@@ -42,5 +44,7 @@ int draw_2d_map(window_t *win, sfTexture *texture);
 window_t *handle_rotations(sfEvent *event, window_t *win);
 int open_entry_window(void);
 window_t *create_struct(void);
+int scale_map(sfVector2f **map_2d, int width, int height, float scale_factor);
+sfVector2f **rotate_map(window_t *win);
 
 #endif

@@ -14,7 +14,8 @@ static int **create_map_rand(int size)
     for (int i = 0; i < size; i++) {
         map[i] = malloc(sizeof(int) * size);
         for (int j = 0; j < size; j++)
-            map[i][j] = rand() % 16 - 8;
+            // map[i][j] = rand() % 16 - 8;
+            map[i][j] = 0;
     }
     return map;
 }
