@@ -46,20 +46,16 @@ static window_t *analyse_events(window_t *win, sfEvent *event)
             win->down = 1;
             win->up = 0;
         }
-        if (event->key.code == sfKeyAdd) {
+        if (event->key.code == sfKeyAdd)
             scale_map(win->map_2d, SIZE_OF_MAP, SIZE_OF_MAP, 1.01);
-            printf("ZOOM\n");
-        }
-        if (event->key.code == sfKeySubtract) {
+        if (event->key.code == sfKeySubtract)
             scale_map(win->map_2d, SIZE_OF_MAP, SIZE_OF_MAP, 0.99);
-            printf("DEZOOM\n");
-        }
         win = handle_rotations(event, win);
     }
     return win;
 }
 
-static window_t *create_mount_and_valley(sfVector2i mouse_pos, window_t *win, int y)
+window_t *create_mount_and_valley(sfVector2i mouse_pos, window_t *win, int y)
 {
     for (int x = 0; x < win->size_of_map; x++) {
         if (((win->map_2d[y][x].x - mouse_pos.x) *
@@ -80,8 +76,6 @@ static window_t *create_mount_and_valley(sfVector2i mouse_pos, window_t *win, in
     win->map_2d = rotate_map(win);
     return win;
 }
-
-
 
 int while_window_open(window_t *win, sfEvent event)
 {
@@ -106,7 +100,6 @@ int open_entry_window(void)
     while (sfRenderWindow_isOpen(win->win)) {
         sfRenderWindow_clear(win->win, sfBlue);
         win->mouse_pressed = while_window_open(win, event);
-
         //scale_map(win->map_2d, SIZE_OF_MAP, SIZE_OF_MAP, 1.01);
         draw_2d_map(win, texture);
         sfRenderWindow_display(win->win);

@@ -10,25 +10,25 @@
 sfVector2f **rotate_map(window_t *win)
 {
     sfVector2f projected = {0.0, 0.0};
+    sfVector3f point_3d = {0.0, 0.0, 0.0};
     int offset_x = WINDOW_WIDTH / 4;
     int center = (win->size_of_map * win->tile_size) / 2;
 
     for (int y = 0; y < win->size_of_map; y++) {
         for (int x = 0; x < win->size_of_map; x++) {
-            sfVector3f point_3d = (sfVector3f){
-                x * win->tile_size, 
-                y * win->tile_size, 
+            point_3d = (sfVector3f){
+                x * win->tile_size,
+                y * win->tile_size,
                 win->map[y][x] * 5
             };
-            projected = project_iso_point(point_3d, win->angle_x, win->angle_y, center);
+            projected = project_iso_point(point_3d, win->angle_x,
+                win->angle_y, center);
             projected.x += offset_x;
             win->map_2d[y][x] = projected;
         }
     }
-
     return win->map_2d;
 }
-
 
 window_t *handle_rotations(sfEvent *event, window_t *win)
 {

@@ -44,7 +44,7 @@ int draw_2d_map(window_t *win, sfTexture *texture);
 window_t *handle_rotations(sfEvent *event, window_t *win);
 int open_entry_window(void);
 window_t *create_struct(void);
-int scale_map(sfVector2f **map_2d, int width, int height, float scale_factor);
+int scale_map(sfVector2f **map_2d, int width, int height, float scale);
 sfVector2f **rotate_map(window_t *win);
 
 #endif

@@ -7,14 +7,14 @@
 
 #include "window.h"
 
-sfVector2f scale_iso_point(sfVector2f point, sfVector2f center, float scale_factor)
+sfVector2f scale_iso_point(sfVector2f point, sfVector2f center, float scale)
 {
     sfVector2f scaled = {0.0, 0.0};
 
     point.x -= center.x;
     point.y -= center.y;
-    scaled.x = point.x * scale_factor;
-    scaled.y = point.y * scale_factor;
+    scaled.x = point.x * scale;
+    scaled.y = point.y * scale;
     scaled.x += center.x;
     scaled.y += center.y;
     return scaled;
@@ -23,7 +23,8 @@ sfVector2f scale_iso_point(sfVector2f point, sfVector2f center, float scale_fact
 int scale_map(sfVector2f **map_2d, int width, int height, float scale_factor)
 {
     sfVector2f projected = {0.0, 0.0};
-    sfVector2f center = {(float)(width * 40) / 2.0, (float)(height * 40) / 2.0};
+    sfVector2f center = {(float)(width * 40) / 2.0,
+        (float)(height * 40) / 2.0};
 
     for (int y = 0; y < height; y++) {
         for (int x = 0; x < width; x++) {
