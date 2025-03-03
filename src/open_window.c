@@ -32,16 +32,15 @@ window_t *analyse_events(window_t *win, sfEvent *event)
 {
     if (event->type == sfEvtClosed)
         sfRenderWindow_close(win->win);
-    if (event->type == sfEvtMouseButtonPressed) {
+    if (event->type == sfEvtMouseButtonPressed)
         win->mouse_pressed = 1;
-    }
     if (event->type == sfEvtMouseButtonReleased)
         win->mouse_pressed = 0;
     if (event->type == sfEvtKeyPressed) {
         if (event->key.code == sfKeyAdd)
-            scale_map(win->map_2d, SIZE_OF_MAP, SIZE_OF_MAP, 1.01);
+            win->map_2d = scale_map(win->map_2d, SIZE_OF_MAP, SIZE_OF_MAP, 1.01);
         if (event->key.code == sfKeySubtract)
-            scale_map(win->map_2d, SIZE_OF_MAP, SIZE_OF_MAP, 0.99);
+            win->map_2d = scale_map(win->map_2d, SIZE_OF_MAP, SIZE_OF_MAP, 0.99);
         win = handle_rotations(event, win);
     }
     return win;
@@ -95,7 +94,6 @@ int open_entry_window(void)
     while (sfRenderWindow_isOpen(win->win)) {
         sfRenderWindow_clear(win->win, sfBlue);
         win->mouse_pressed = while_window_open(win, buttons, event);
-        //scale_map(win->map_2d, SIZE_OF_MAP, SIZE_OF_MAP, 1.01);
         draw_2d_map(win, texture_grass);
         sfRenderWindow_drawSprite(win->win, buttons->button_add, NULL);
         sfRenderWindow_drawSprite(win->win, buttons->button_dig, NULL);

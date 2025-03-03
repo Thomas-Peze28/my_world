@@ -11,7 +11,6 @@ sfVector2f **rotate_map(window_t *win)
 {
     sfVector2f projected = {0.0, 0.0};
     sfVector3f point_3d = {0.0, 0.0, 0.0};
-    int offset_x = WINDOW_WIDTH / 4;
     int center = (win->size_of_map * win->tile_size) / 2;
 
     for (int y = 0; y < win->size_of_map; y++) {
@@ -23,7 +22,7 @@ sfVector2f **rotate_map(window_t *win)
             };
             projected = project_iso_point(point_3d, win->angle_x,
                 win->angle_y, center);
-            projected.x += offset_x;
+            projected.x += 300;
             win->map_2d[y][x] = projected;
         }
     }
@@ -32,14 +31,21 @@ sfVector2f **rotate_map(window_t *win)
 
 window_t *handle_rotations(sfEvent *event, window_t *win)
 {
-    if (event->key.code == sfKeyUp)
+    if (event->key.code == sfKeyUp) {
         win->angle_y -= 0.01;
-    if (event->key.code == sfKeyDown)
+        win->map_2d = rotate_map(win);
+    }
+    if (event->key.code == sfKeyDown) {
         win->angle_y += 0.01;
-    if (event->key.code == sfKeyLeft)
+        win->map_2d = rotate_map(win);
+    }
+    if (event->key.code == sfKeyLeft) {
         win->angle_x -= 0.01;
-    if (event->key.code == sfKeyRight)
+        win->map_2d = rotate_map(win);
+    }
+    if (event->key.code == sfKeyRight) {
         win->angle_x += 0.01;
-    win->map_2d = rotate_map(win);
+        win->map_2d = rotate_map(win);
+    }
     return win;
 }

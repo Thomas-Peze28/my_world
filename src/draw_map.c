@@ -10,8 +10,8 @@
 static sfVertexArray *create_line(sfVector2f *point1, sfVector2f *point2)
 {
     sfVertexArray *vertex_array = sfVertexArray_create();
-    sfVertex vertex1 = {.position = *point1, .color = sfBlack};
-    sfVertex vertex2 = {.position = *point2, .color = sfBlack};
+    sfVertex vertex1 = {.position = *point1, .color = sfWhite};
+    sfVertex vertex2 = {.position = *point2, .color = sfWhite};
 
     if (!vertex_array)
         return NULL;
