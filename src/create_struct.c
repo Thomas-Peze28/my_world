@@ -61,3 +61,24 @@ window_t *create_struct(void)
     win->down = 0;
     return win;
 }
+
+buttons_t *create_buttons(void)
+{
+    buttons_t *buttons = malloc(sizeof(buttons_t));
+
+    buttons->texture_add_idle = sfTexture_createFromFile("assets/add_button_idle.png", NULL);
+    buttons->texture_add_hover = sfTexture_createFromFile("assets/add_button_hover.png", NULL);
+    buttons->texture_add_selected = sfTexture_createFromFile("assets/add_button_selected.png", NULL);
+    buttons->texture_dig_idle = sfTexture_createFromFile("assets/dig_button_idle.png", NULL);
+    buttons->texture_dig_hover = sfTexture_createFromFile("assets/dig_button_hover.png", NULL);
+    buttons->texture_dig_selected = sfTexture_createFromFile("assets/dig_button_selected.png", NULL);
+    buttons->button_add = sfSprite_create();
+    buttons->button_dig = sfSprite_create();
+    sfSprite_setTexture(buttons->button_add, buttons->texture_add_idle, sfTrue);
+    sfSprite_setTexture(buttons->button_dig, buttons->texture_dig_idle, sfTrue);
+    sfSprite_setScale(buttons->button_add, (sfVector2f){0.5, 0.5});
+    sfSprite_setScale(buttons->button_dig, (sfVector2f){0.5, 0.5});
+    sfSprite_setPosition(buttons->button_add, (sfVector2f){10, 10});
+    sfSprite_setPosition(buttons->button_dig, (sfVector2f){10, 150});
+    return buttons;
+}

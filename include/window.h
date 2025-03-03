@@ -36,6 +36,16 @@ typedef struct window_s {
     int down;
 } window_t;
 
+typedef struct buttons_s {
+    sfTexture *texture_dig_idle;
+    sfTexture *texture_dig_hover;
+    sfTexture *texture_dig_selected;
+    sfTexture *texture_add_idle;
+    sfTexture *texture_add_hover;
+    sfTexture *texture_add_selected;
+    sfSprite *button_add;
+    sfSprite *button_dig;
+} buttons_t;
 
 void my_destroy(window_t *win);
 sfVector2f project_iso_point(sfVector3f v, double angle_x,
@@ -46,5 +56,8 @@ int open_entry_window(void);
 window_t *create_struct(void);
 int scale_map(sfVector2f **map_2d, int width, int height, float scale);
 sfVector2f **rotate_map(window_t *win);
+buttons_t *create_buttons(void);
+int is_mouse_on_button(sfSprite *sprite, sfVector2i mouse_pos);
+window_t *analyse_buttons(window_t *win, sfEvent event, buttons_t *buttons);
 
 #endif

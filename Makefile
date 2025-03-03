@@ -12,6 +12,7 @@ SRC	=	src/main.c			\
 		src/rotations.c	\
 		src/draw_map.c \
 		src/zoom_map.c \
+		src/buttons.c \
 
 OBJ	=	$(SRC:.c=.o)
 
