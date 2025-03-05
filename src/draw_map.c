@@ -27,9 +27,9 @@ sfVertexArray *create_textured_quad(sfVector2f p1, sfVector2f p2,
     sfColor color = sfWhite;
     sfVertexArray *quad = sfVertexArray_create();
     sfVertex v1 = {.position = p1, .color = color, .texCoords = {0, 0}};
-    sfVertex v2 = {.position = p2, .color = color, .texCoords = {5184, 0}};
-    sfVertex v3 = {.position = p3, .color = color, .texCoords = {5184, 3456}};
-    sfVertex v4 = {.position = p4, .color = color, .texCoords = {0, 3456}};
+    sfVertex v2 = {.position = p2, .color = color, .texCoords = {512, 0}};
+    sfVertex v3 = {.position = p3, .color = color, .texCoords = {512, 512}};
+    sfVertex v4 = {.position = p4, .color = color, .texCoords = {0, 512}};
 
     if (!quad)
         return NULL;
@@ -45,10 +45,10 @@ int draw_lines(sfVector2i id, window_t *win)
 {
     sfVertexArray *line = NULL;
 
-    if (id.x < SIZE_OF_MAP - 1)
+    if (id.x < SIZE_MAP - 1)
         line = create_line(&win->map_2d[id.y][id.x],
             &win->map_2d[id.y][id.x + 1]);
-    if (id.y < SIZE_OF_MAP - 1)
+    if (id.y < SIZE_MAP - 1)
         line = create_line(&win->map_2d[id.y][id.x],
             &win->map_2d[id.y + 1][id.x]);
     if (line) {
@@ -58,36 +58,56 @@ int draw_lines(sfVector2i id, window_t *win)
     return 0;
 }
 
-int draw_quads(sfVector2i id, window_t *win, sfTexture *texture)
+int draw_quads(sfVector2i id, window_t *win, layers_t *layers)
 {
-    sfRenderStates states = {
+    sfRenderStates grass_state = {
         .blendMode = sfBlendAlpha,
         .transform = sfTransform_Identity,
-        .texture = texture,
+        .texture = layers->text_grass,
+        .shader = NULL
+    };
+    sfRenderStates rock_state = {
+        .blendMode = sfBlendAlpha,
+        .transform = sfTransform_Identity,
+        .texture = layers->text_rock,
+        .shader = NULL
+    };
+    sfRenderStates snow_state = {
+        .blendMode = sfBlendAlpha,
+        .transform = sfTransform_Identity,
+        .texture = layers->text_snow,
         .shader = NULL
     };
     sfVertexArray *quad = NULL;
 
-    if (id.x < SIZE_OF_MAP - 1 && id.y < SIZE_OF_MAP - 1) {
+    if (id.x < SIZE_MAP - 1 && id.y < SIZE_MAP - 1) {
         quad = create_textured_quad(
             win->map_2d[id.y][id.x], win->map_2d[id.y][id.x + 1],
             win->map_2d[id.y + 1][id.x + 1], win->map_2d[id.y + 1][id.x]);
-        if (quad) {
-            sfRenderWindow_drawVertexArray(win->win, quad, &states);
+        if (quad && win->map[id.y][id.x] >= 0 && win->map[id.y][id.x] <= 20) {
+            sfRenderWindow_drawVertexArray(win->win, quad, &grass_state);
+            sfVertexArray_destroy(quad);
+        }
+        if (quad && win->map[id.y][id.x] > 20 && win->map[id.y][id.x] < 50) {
+            sfRenderWindow_drawVertexArray(win->win, quad, &rock_state);
+            sfVertexArray_destroy(quad);
+        }
+        if (quad && win->map[id.y][id.x] >= 50) {
+            sfRenderWindow_drawVertexArray(win->win, quad, &snow_state);
             sfVertexArray_destroy(quad);
         }
     }
     return 0;
 }
 
-int draw_2d_map(window_t *win, sfTexture *texture)
+int draw_2d_map(window_t *win, layers_t *layers)
 {
-    if (!win->win || !win->map_2d || !texture)
+    if (!win->win || !win->map_2d || !layers)
         return -1;
-    for (int y = 0; y < SIZE_OF_MAP; y++) {
-        for (int x = 0; x < SIZE_OF_MAP; x++) {
+    for (int y = 0; y < SIZE_MAP; y++) {
+        for (int x = 0; x < SIZE_MAP; x++) {
             draw_lines((sfVector2i){x, y}, win);
-            draw_quads((sfVector2i){x, y}, win, texture);
+            draw_quads((sfVector2i){x, y}, win, layers);
         }
     }
     return 0;

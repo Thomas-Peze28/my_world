@@ -47,10 +47,19 @@ typedef struct buttons_s {
     sfSprite *button_dig;
 } buttons_t;
 
+typedef struct layers_s {
+    sfTexture *text_grass;
+    sfTexture *text_dirt;
+    sfTexture *text_rock;
+    sfTexture *text_snow;
+    sfTexture *text_sky;
+    sfSprite *sky;
+} layers_t;
+
 void my_destroy(window_t *win);
 sfVector2f project_iso_point(sfVector3f v, double angle_x,
     double angle_y, int center);
-int draw_2d_map(window_t *win, sfTexture *texture);
+int draw_2d_map(window_t *win, layers_t *layers);
 window_t *handle_rotations(sfEvent *event, window_t *win);
 int open_entry_window(void);
 window_t *create_struct(void);
@@ -60,5 +69,6 @@ sfVector2f **rotate_map(window_t *win);
 buttons_t *create_buttons(void);
 int is_mouse_on_button(sfSprite *sprite, sfVector2i mouse_pos);
 window_t *analyse_buttons(window_t *win, sfEvent event, buttons_t *buttons);
+layers_t *create_layers(void);
 
 #endif

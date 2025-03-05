@@ -87,15 +87,15 @@ int open_entry_window(void)
 {
     window_t *win = create_struct();
     buttons_t *buttons = create_buttons();
+    layers_t *layers = create_layers();
     sfEvent event;
-    sfTexture *texture_grass = sfTexture_createFromFile("assets/herbe.jpg",
-        NULL);
 
     sfRenderWindow_setFramerateLimit(win->win, 60);
     while (sfRenderWindow_isOpen(win->win)) {
         sfRenderWindow_clear(win->win, sfBlue);
+        sfRenderWindow_drawSprite(win->win, layers->sky, NULL);
         win->mouse_pressed = while_window_open(win, buttons, event);
-        draw_2d_map(win, texture_grass);
+        draw_2d_map(win, layers);
         sfRenderWindow_drawSprite(win->win, buttons->button_add, NULL);
         sfRenderWindow_drawSprite(win->win, buttons->button_dig, NULL);
         sfRenderWindow_display(win->win);

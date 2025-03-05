@@ -25,7 +25,7 @@ static sfVector2f **create_2d_map(window_t *win, double angle_x,
     double angle_y)
 {
     sfVector2f **map_2d = malloc(win->size_of_map * sizeof(sfVector2f *));
-    int offset_x = WINDOW_WIDTH / 2;
+    int offset_x = 2000;
     sfVector2f projected = {0.0, 0.0};
 
     if (!map_2d)
@@ -50,9 +50,9 @@ window_t *create_struct(void)
 
     win->angle_x = 4.00;
     win->angle_y = 5.14;
-    win->size_of_map = 30;
+    win->size_of_map = 50;
     win->map = create_map_rand(win->size_of_map);
-    win->tile_size = 40;
+    win->tile_size = 20;
     win->map_2d = create_2d_map(win, (M_PI / win->angle_x),
         (M_PI / win->angle_y));
     win->mouse_pressed = 0;
@@ -95,4 +95,18 @@ buttons_t *create_buttons(void)
     b->button_dig = sfSprite_create();
     button_set(b);
     return b;
+}
+
+layers_t *create_layers(void)
+{
+    layers_t *l = malloc(sizeof(layers_t));
+
+    l->text_dirt = sfTexture_createFromFile("assets/dirt.jpg", NULL);
+    l->text_grass = sfTexture_createFromFile("assets/grass.jpg", NULL);
+    l->text_rock = sfTexture_createFromFile("assets/rock.jpg", NULL);
+    l->text_sky = sfTexture_createFromFile("assets/sky.jpg", NULL);
+    l->text_snow = sfTexture_createFromFile("assets/snow.jpg", NULL);
+    l->sky = sfSprite_create();
+    sfSprite_setTexture(l->sky, l->text_sky, sfTrue);
+    return l;
 }
