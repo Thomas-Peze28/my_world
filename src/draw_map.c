@@ -72,6 +72,16 @@ int draw_quads(sfVector2i id, window_t *win, layers_t *layers)
         quad = create_textured_quad(
             win->map_2d[id.y][id.x], win->map_2d[id.y][id.x + 1],
             win->map_2d[id.y + 1][id.x + 1], win->map_2d[id.y + 1][id.x]);
+        if (quad && win->map[id.y][id.x] < -20) {
+            state.texture = layers->text_rock;
+            sfRenderWindow_drawVertexArray(win->win, quad, &state);
+            sfVertexArray_destroy(quad);
+        }
+        if (quad && win->map[id.y][id.x] < 0 && win->map[id.y][id.x] >= -20) {
+            state.texture = layers->text_dirt;
+            sfRenderWindow_drawVertexArray(win->win, quad, &state);
+            sfVertexArray_destroy(quad);
+        }
         if (quad && win->map[id.y][id.x] >= 0 && win->map[id.y][id.x] <= 20) {
             state.texture = layers->text_grass;
             sfRenderWindow_drawVertexArray(win->win, quad, &state);

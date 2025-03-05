@@ -101,7 +101,7 @@ layers_t *create_layers(void)
 {
     layers_t *l = malloc(sizeof(layers_t));
 
-    l->text_dirt = sfTexture_createFromFile("assets/dirt.jpg", NULL);
+    l->text_dirt = sfTexture_createFromFile("assets/dirt.png", NULL);
     l->text_grass = sfTexture_createFromFile("assets/grass.jpg", NULL);
     l->text_rock = sfTexture_createFromFile("assets/rock.jpg", NULL);
     l->text_sky = sfTexture_createFromFile("assets/sky.jpg", NULL);
