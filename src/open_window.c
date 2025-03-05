@@ -38,9 +38,9 @@ window_t *analyse_events(window_t *win, sfEvent *event)
         win->mouse_pressed = 0;
     if (event->type == sfEvtKeyPressed) {
         if (event->key.code == sfKeyAdd)
-            win->map_2d = scale_map(win->map_2d, SIZE_OF_MAP, SIZE_OF_MAP, 1.01);
+            win->map_2d = scale_map(win->map_2d, SIZE_MAP, SIZE_MAP, 1.01);
         if (event->key.code == sfKeySubtract)
-            win->map_2d = scale_map(win->map_2d, SIZE_OF_MAP, SIZE_OF_MAP, 0.99);
+            win->map_2d = scale_map(win->map_2d, SIZE_MAP, SIZE_MAP, 0.99);
         win = handle_rotations(event, win);
     }
     return win;
@@ -88,7 +88,8 @@ int open_entry_window(void)
     window_t *win = create_struct();
     buttons_t *buttons = create_buttons();
     sfEvent event;
-    sfTexture *texture_grass = sfTexture_createFromFile("assets/herbe.jpg", NULL);
+    sfTexture *texture_grass = sfTexture_createFromFile("assets/herbe.jpg",
+        NULL);
 
     sfRenderWindow_setFramerateLimit(win->win, 60);
     while (sfRenderWindow_isOpen(win->win)) {

@@ -20,7 +20,8 @@ sfVector2f scale_iso_point(sfVector2f point, sfVector2f center, float scale)
     return scaled;
 }
 
-sfVector2f **scale_map(sfVector2f **map_2d, int width, int height, float scale_factor)
+sfVector2f **scale_map(sfVector2f **map_2d, int width, int height,
+    float scale_factor)
 {
     sfVector2f projected = {0.0, 0.0};
     sfVector2f center = {(float)(width * 40) / 2.0,

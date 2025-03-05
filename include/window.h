@@ -21,7 +21,7 @@
     #define M_PI 3.14159265358979323846
     #define WINDOW_WIDTH 1920
     #define WINDOW_HEIGHT 1080
-    #define SIZE_OF_MAP 30
+    #define SIZE_MAP 30
 
 typedef struct window_s {
     int tile_size;
@@ -37,12 +37,12 @@ typedef struct window_s {
 } window_t;
 
 typedef struct buttons_s {
-    sfTexture *texture_dig_idle;
-    sfTexture *texture_dig_hover;
-    sfTexture *texture_dig_selected;
-    sfTexture *texture_add_idle;
-    sfTexture *texture_add_hover;
-    sfTexture *texture_add_selected;
+    sfTexture *text_dig_idle;
+    sfTexture *text_dig_hover;
+    sfTexture *text_dig_selected;
+    sfTexture *text_add_idle;
+    sfTexture *text_add_hover;
+    sfTexture *text_add_selected;
     sfSprite *button_add;
     sfSprite *button_dig;
 } buttons_t;
@@ -54,7 +54,8 @@ int draw_2d_map(window_t *win, sfTexture *texture);
 window_t *handle_rotations(sfEvent *event, window_t *win);
 int open_entry_window(void);
 window_t *create_struct(void);
-sfVector2f **scale_map(sfVector2f **map_2d, int width, int height, float scale);
+sfVector2f **scale_map(sfVector2f **map_2d, int width, int height,
+    float scale);
 sfVector2f **rotate_map(window_t *win);
 buttons_t *create_buttons(void);
 int is_mouse_on_button(sfSprite *sprite, sfVector2i mouse_pos);
