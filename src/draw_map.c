@@ -58,6 +58,21 @@ int draw_lines(sfVector2i id, window_t *win)
     return 0;
 }
 
+int draw_layers(window_t *win, layers_t *la, sfRenderStates *st, sfVector2i id)
+{
+    if (win->map[id.y][id.x] < -20)
+        st->texture = la->text_rock;
+    if (win->map[id.y][id.x] >= -20 && win->map[id.y][id.x] < 0)
+        st->texture = la->text_dirt;
+    if (win->map[id.y][id.x] >= 0 && win->map[id.y][id.x] <= 20)
+        st->texture = la->text_grass;
+    if (win->map[id.y][id.x] > 20 && win->map[id.y][id.x] < 50)
+        st->texture = la->text_rock;
+    if (win->map[id.y][id.x] >= 50)
+        st->texture = la->text_snow;
+    return 0;
+}
+
 int draw_quads(sfVector2i id, window_t *win, layers_t *layers)
 {
     sfRenderStates state = {
@@ -72,28 +87,8 @@ int draw_quads(sfVector2i id, window_t *win, layers_t *layers)
         quad = create_textured_quad(
             win->map_2d[id.y][id.x], win->map_2d[id.y][id.x + 1],
             win->map_2d[id.y + 1][id.x + 1], win->map_2d[id.y + 1][id.x]);
-        if (quad && win->map[id.y][id.x] < -20) {
-            state.texture = layers->text_rock;
-            sfRenderWindow_drawVertexArray(win->win, quad, &state);
-            sfVertexArray_destroy(quad);
-        }
-        if (quad && win->map[id.y][id.x] < 0 && win->map[id.y][id.x] >= -20) {
-            state.texture = layers->text_dirt;
-            sfRenderWindow_drawVertexArray(win->win, quad, &state);
-            sfVertexArray_destroy(quad);
-        }
-        if (quad && win->map[id.y][id.x] >= 0 && win->map[id.y][id.x] <= 20) {
-            state.texture = layers->text_grass;
-            sfRenderWindow_drawVertexArray(win->win, quad, &state);
-            sfVertexArray_destroy(quad);
-        }
-        if (quad && win->map[id.y][id.x] > 20 && win->map[id.y][id.x] < 50) {
-            state.texture = layers->text_rock;
-            sfRenderWindow_drawVertexArray(win->win, quad, &state);
-            sfVertexArray_destroy(quad);
-        }
-        if (quad && win->map[id.y][id.x] >= 50) {
-            state.texture = layers->text_snow;
+        if (quad) {
+            draw_layers(win, layers, &state, id);
             sfRenderWindow_drawVertexArray(win->win, quad, &state);
             sfVertexArray_destroy(quad);
         }

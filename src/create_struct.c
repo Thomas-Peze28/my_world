@@ -25,7 +25,7 @@ static sfVector2f **create_2d_map(window_t *win, double angle_x,
     double angle_y)
 {
     sfVector2f **map_2d = malloc(win->size_of_map * sizeof(sfVector2f *));
-    int offset_x = 2000;
+    int offset_x = WINDOW_WIDTH / 2;
     sfVector2f projected = {0.0, 0.0};
 
     if (!map_2d)
@@ -49,12 +49,12 @@ window_t *create_struct(void)
     window_t *win = malloc(sizeof(window_t));
 
     win->angle_x = 4.00;
-    win->angle_y = 5.14;
-    win->size_of_map = 50;
+    win->angle_y = 5.90;
+    win->size_of_map = 30;
     win->map = create_map_rand(win->size_of_map);
-    win->tile_size = 20;
-    win->map_2d = create_2d_map(win, (M_PI / win->angle_x),
-        (M_PI / win->angle_y));
+    win->tile_size = 40;
+    win->map_2d = create_2d_map(win, win->angle_x,
+        win->angle_y);
     win->mouse_pressed = 0;
     win->win = sfRenderWindow_create((sfVideoMode){WINDOW_WIDTH,
         WINDOW_HEIGHT, 32}, "My_world", sfDefaultStyle, NULL);
