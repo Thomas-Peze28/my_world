@@ -58,8 +58,6 @@ window_t *create_struct(void)
     win->mouse_pressed = 0;
     win->win = sfRenderWindow_create((sfVideoMode){WINDOW_WIDTH,
         WINDOW_HEIGHT, 32}, "My_world", sfDefaultStyle, NULL);
-    win->up = -1;
-    win->down = -1;
     return win;
 }
 
