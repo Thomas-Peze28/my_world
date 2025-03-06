@@ -72,11 +72,11 @@ int open_entry_window(void)
     sfEvent event;
 
     sfRenderWindow_setFramerateLimit(win->win, 60);
+    rotate_map(win);
     while (sfRenderWindow_isOpen(win->win)) {
         sfRenderWindow_clear(win->win, sfBlue);
         sfRenderWindow_drawSprite(win->win, layers->sky, NULL);
         win->mouse_pressed = while_window_open(win, buttons, event);
-        rotate_map(win);
         draw_2d_map(win, layers);
         sfRenderWindow_drawSprite(win->win, buttons->button_add, NULL);
         sfRenderWindow_drawSprite(win->win, buttons->button_dig, NULL);
