@@ -38,10 +38,14 @@ window_t *analyse_events(window_t *win, sfEvent *event)
     if (event->type == sfEvtMouseButtonReleased)
         win->mouse_pressed = 0;
     if (event->type == sfEvtKeyPressed) {
-        if (event->key.code == sfKeyAdd)
-            win->map_2d = scale_map(win->map_2d, SIZE_MAP, SIZE_MAP, 1.01);
-        if (event->key.code == sfKeySubtract)
-            win->map_2d = scale_map(win->map_2d, SIZE_MAP, SIZE_MAP, 0.99);
+        if (event->key.code == sfKeyAdd) {
+            win->scale += 0.05;
+            win->map_2d = rotate_map(win);
+        }
+        if (event->key.code == sfKeySubtract) {
+            win->scale -= 0.05;
+            win->map_2d = rotate_map(win);
+        }
         win = handle_rotations(event, win);
     }
     return win;

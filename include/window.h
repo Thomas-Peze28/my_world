@@ -32,6 +32,7 @@ typedef struct window_s {
     int mouse_pressed;
     double angle_x;
     double angle_y;
+    float scale;
     int up;
     int down;
     int flat;

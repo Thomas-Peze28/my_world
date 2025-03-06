@@ -6,6 +6,7 @@
 */
 
 #include "window.h"
+#include <stdio.h>
 
 sfVector2f **rotate_map(window_t *win)
 {
@@ -26,6 +27,7 @@ sfVector2f **rotate_map(window_t *win)
             win->map_2d[y][x] = projected;
         }
     }
+    scale_map(win->map_2d, win->size_of_map, win->size_of_map, win->scale);
     return win->map_2d;
 }
 
