@@ -19,6 +19,7 @@ sfVector2f project_iso_point(sfVector3f v, double angle_x,
 
     v.x -= center;
     v.y -= center;
+    v.z += v.y * 0.001 + v.x * 0.001;
     new_x = cos(angle_x) * v.x - sin(angle_x) * v.y;
     new_y = sin(angle_y) * (v.x + v.y) - v.z;
     new_x += center;
@@ -46,28 +47,6 @@ window_t *analyse_events(window_t *win, sfEvent *event)
     return win;
 }
 
-window_t *create_mount_and_valley(sfVector2i mouse_pos, window_t *win, int y)
-{
-    for (int x = 0; x < win->size_of_map; x++) {
-        if (((win->map_2d[y][x].x - mouse_pos.x) *
-            (win->map_2d[y][x].x - mouse_pos.x)) +
-            ((win->map_2d[y][x].y - mouse_pos.y) *
-            (win->map_2d[y][x].y - mouse_pos.y)) <=
-            ((win->tile_size + win->tile_size) *
-            (win->tile_size + win->tile_size)) && win->up == 1)
-            win->map[y][x] += 2;
-        if (((win->map_2d[y][x].x - mouse_pos.x) *
-            (win->map_2d[y][x].x - mouse_pos.x)) +
-            ((win->map_2d[y][x].y - mouse_pos.y) *
-            (win->map_2d[y][x].y - mouse_pos.y)) <=
-            ((win->tile_size + win->tile_size) *
-            (win->tile_size + win->tile_size)) && win->down == 1)
-            win->map[y][x] -= 2;
-    }
-    win->map_2d = rotate_map(win);
-    return win;
-}
-
 int while_window_open(window_t *win, buttons_t *buttons, sfEvent event)
 {
     sfVector2i mouse_pos = sfMouse_getPositionRenderWindow(win->win);
@@ -77,8 +56,10 @@ int while_window_open(window_t *win, buttons_t *buttons, sfEvent event)
         win = analyse_buttons(win, event, buttons);
     }
     if (win->mouse_pressed == 1) {
-        for (int y = 0; y < win->size_of_map; y++)
+        for (int y = 0; y < win->size_of_map; y++) {
             create_mount_and_valley(mouse_pos, win, y);
+            create_flat(mouse_pos, win, y);
+        }
     }
     return win->mouse_pressed;
 }
@@ -99,6 +80,7 @@ int open_entry_window(void)
         draw_2d_map(win, layers);
         sfRenderWindow_drawSprite(win->win, buttons->button_add, NULL);
         sfRenderWindow_drawSprite(win->win, buttons->button_dig, NULL);
+        sfRenderWindow_drawSprite(win->win, buttons->button_flat, NULL);
         sfRenderWindow_display(win->win);
     }
     my_destroy(win);

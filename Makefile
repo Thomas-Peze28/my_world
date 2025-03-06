@@ -13,6 +13,9 @@ SRC	=	src/main.c			\
 		src/draw_map.c \
 		src/zoom_map.c \
 		src/buttons.c \
+		src/create_flat.c \
+		src/create_mountains_valley.c \
+		src/is_mouse_on_button.c \
 
 OBJ	=	$(SRC:.c=.o)
 

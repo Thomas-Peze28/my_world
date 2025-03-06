@@ -96,15 +96,26 @@ int draw_quads(sfVector2i id, window_t *win, layers_t *layers)
     return 0;
 }
 
-int draw_2d_map(window_t *win, layers_t *layers)
+void draw_2d_map(window_t *win, layers_t *layers)
 {
-    if (!win->win || !win->map_2d || !layers)
-        return -1;
-    for (int y = 0; y < SIZE_MAP; y++) {
-        for (int x = 0; x < SIZE_MAP; x++) {
-            draw_lines((sfVector2i){x, y}, win);
-            draw_quads((sfVector2i){x, y}, win, layers);
-        }
+    int start_x = 0;
+    int end_x = SIZE_MAP;
+    int start_y = 0;
+    int end_y = SIZE_MAP;
+    int step_x = 1;
+    int step_y = 1;
+
+    if (win->angle_x > M_PI / 2 && win->angle_x < 3 * M_PI / 2) {
+        start_x = SIZE_MAP - 1;
+        end_x = -1;
+        step_x = -1;
     }
-    return 0;
+    if (win->angle_y > M_PI) {
+        start_y = SIZE_MAP - 1;
+        end_y = -1;
+        step_y = -1;
+    }
+    for (int y = start_y; y != end_y; y += step_y)
+        for (int x = start_x; x != end_x; x += step_x)
+            draw_quads((sfVector2i){x, y}, win, layers);
 }

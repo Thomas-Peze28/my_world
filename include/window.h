@@ -34,6 +34,7 @@ typedef struct window_s {
     double angle_y;
     int up;
     int down;
+    int flat;
 } window_t;
 
 typedef struct buttons_s {
@@ -43,8 +44,12 @@ typedef struct buttons_s {
     sfTexture *text_add_idle;
     sfTexture *text_add_hover;
     sfTexture *text_add_selected;
+    sfTexture *text_flat_idle;
+    sfTexture *text_flat_hover;
+    sfTexture *text_flat_selected;
     sfSprite *button_add;
     sfSprite *button_dig;
+    sfSprite *button_flat;
 } buttons_t;
 
 typedef struct layers_s {
@@ -59,7 +64,7 @@ typedef struct layers_s {
 void my_destroy(window_t *win);
 sfVector2f project_iso_point(sfVector3f v, double angle_x,
     double angle_y, int center);
-int draw_2d_map(window_t *win, layers_t *layers);
+void draw_2d_map(window_t *win, layers_t *layers);
 window_t *handle_rotations(sfEvent *event, window_t *win);
 int open_entry_window(void);
 window_t *create_struct(void);
@@ -70,5 +75,8 @@ buttons_t *create_buttons(void);
 int is_mouse_on_button(sfSprite *sprite, sfVector2i mouse_pos);
 window_t *analyse_buttons(window_t *win, sfEvent event, buttons_t *buttons);
 layers_t *create_layers(void);
+window_t *create_mount_and_valley(sfVector2i mouse_pos, window_t *win, int y);
+window_t *create_flat(sfVector2i mouse_pos, window_t *win, int y);
+int is_mouse_on_button(sfSprite *sprite, sfVector2i mouse_pos);
 
 #endif
