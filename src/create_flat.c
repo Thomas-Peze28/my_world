@@ -17,8 +17,8 @@ window_t *create_flat(sfVector2i mouse_pos, window_t *win, int y)
             (win->map_2d[y][x].x - mouse_pos.x)) +
             ((win->map_2d[y][x].y - mouse_pos.y) *
             (win->map_2d[y][x].y - mouse_pos.y)) <=
-            ((win->tile_size + win->tile_size) *
-            (win->tile_size + win->tile_size)) && win->flat == 1)
+            ((win->brush_size * 2) *
+            (win->brush_size * 2)) && win->flat == 1)
             win->map[y][x] = 0;
     }
     win->map_2d = rotate_map(win);
