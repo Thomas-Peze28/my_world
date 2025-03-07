@@ -53,7 +53,7 @@ window_t *create_struct(void)
     win->size_of_map = 100;
     win->map = create_map_rand(win->size_of_map);
     win->tile_size = 10;
-    win->cursor_size = win->tile_size;
+    win->brush_size = win->tile_size;
     win->map_2d = create_2d_map(win, win->angle_x,
         win->angle_y);
     win->mouse_pressed = 0;
