@@ -14,6 +14,6 @@ void manage_brush(window_t *win, sfEvent *event)
 {
     if (event->key.code == sfKeyA)
         win->brush_size++;
-    if (event->key.code == sfKeyZ)
+    if (event->key.code == sfKeyE)
         win->brush_size--;
 }
