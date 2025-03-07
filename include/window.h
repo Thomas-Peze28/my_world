@@ -63,6 +63,7 @@ typedef struct layers_s {
     sfSprite *sky;
 } layers_t;
 
+int my_strcmp(char const *s1, char const *s2);
 void my_destroy(window_t *win);
 sfVector2f project_iso_point(sfVector3f v, double angle_x,
     double angle_y, int center);

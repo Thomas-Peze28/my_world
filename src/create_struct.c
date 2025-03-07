@@ -53,7 +53,7 @@ window_t *create_struct(void)
     win->size_of_map = 100;
     win->map = create_map_rand(win->size_of_map);
     win->tile_size = 10;
-    win->brush_size = win->tile_size;
+    win->cursor_size = win->tile_size;
     win->map_2d = create_2d_map(win, win->angle_x,
         win->angle_y);
     win->mouse_pressed = 0;
@@ -67,12 +67,9 @@ window_t *create_struct(void)
 
 void button_set(buttons_t *buttons)
 {
-    sfSprite_setTexture(buttons->button_add, buttons->text_add_idle,
-        sfTrue);
-    sfSprite_setTexture(buttons->button_dig, buttons->text_dig_idle,
-        sfTrue);
-    sfSprite_setTexture(buttons->button_flat, buttons->text_flat_idle,
-        sfTrue);
+    sfSprite_setTexture(buttons->button_add, buttons->text_add_idle, sfTrue);
+    sfSprite_setTexture(buttons->button_dig, buttons->text_dig_idle, sfTrue);
+    sfSprite_setTexture(buttons->button_flat, buttons->text_flat_idle, sfTrue);
     sfSprite_setScale(buttons->button_add, (sfVector2f){0.5, 0.5});
     sfSprite_setScale(buttons->button_dig, (sfVector2f){0.5, 0.5});
     sfSprite_setScale(buttons->button_flat, (sfVector2f){0.5, 0.5});
@@ -83,20 +80,15 @@ void button_set(buttons_t *buttons)
 
 void load_button_texture(buttons_t *b)
 {
-    b->text_add_idle = sfTexture_createFromFile("assets/add_idle.png",
-        NULL);
-    b->text_add_hover = sfTexture_createFromFile("assets/add_hover.png",
-        NULL);
+    b->text_add_idle = sfTexture_createFromFile("assets/add_idle.png", NULL);
+    b->text_add_hover = sfTexture_createFromFile("assets/add_hover.png", NULL);
     b->text_add_selected = sfTexture_createFromFile("assets/add_selected.png",
         NULL);
-    b->text_dig_idle = sfTexture_createFromFile("assets/dig_idle.png",
-        NULL);
-    b->text_dig_hover = sfTexture_createFromFile("assets/dig_hover.png",
-        NULL);
+    b->text_dig_idle = sfTexture_createFromFile("assets/dig_idle.png", NULL);
+    b->text_dig_hover = sfTexture_createFromFile("assets/dig_hover.png", NULL);
     b->text_dig_selected = sfTexture_createFromFile("assets/dig_selected.png",
         NULL);
-    b->text_flat_idle = sfTexture_createFromFile("assets/flat_idle.png",
-        NULL);
+    b->text_flat_idle = sfTexture_createFromFile("assets/flat_idle.png", NULL);
     b->text_flat_hover = sfTexture_createFromFile("assets/flat_hover.png",
         NULL);
     b->text_flat_selected = sfTexture_createFromFile("assets/flat_select.png",

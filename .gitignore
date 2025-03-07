@@ -12,5 +12,6 @@ coding*
 .vscode
 test.c
 unit_tests*
-window
+my_world
 log
+*.pdf

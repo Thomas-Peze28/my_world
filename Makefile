@@ -18,10 +18,11 @@ SRC	=	src/main.c			\
 		src/is_mouse_on_button.c \
 		src/brush_size.c \
 		src/move_map.c \
+		src/my_strcmp.c
 
 OBJ	=	$(SRC:.c=.o)
 
-NAME	=	window
+NAME	=	my_world
 
 CFLAGS = -Wextra -Wall -I ./include -l csfml-graphics -l csfml-system \
 	-l csfml-window -l csfml-audio -lm
