@@ -21,11 +21,10 @@
     #define M_PI 3.14159265358979323846
     #define WINDOW_WIDTH 1920
     #define WINDOW_HEIGHT 1080
-    #define SIZE_MAP 30
-
 typedef struct window_s {
     int tile_size;
     int size_of_map;
+    int brush_size;
     sfRenderWindow *win;
     sfVector2f **map_2d;
     int **map;
@@ -36,6 +35,8 @@ typedef struct window_s {
     int up;
     int down;
     int flat;
+    int offset_x;
+    int offset_y;
 } window_t;
 
 typedef struct buttons_s {
@@ -79,5 +80,6 @@ layers_t *create_layers(void);
 window_t *create_mount_and_valley(sfVector2i mouse_pos, window_t *win, int y);
 window_t *create_flat(sfVector2i mouse_pos, window_t *win, int y);
 int is_mouse_on_button(sfSprite *sprite, sfVector2i mouse_pos);
+void manage_brush(window_t *win, sfEvent *event);
 
 #endif

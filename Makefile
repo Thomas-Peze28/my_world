@@ -16,6 +16,7 @@ SRC	=	src/main.c			\
 		src/create_flat.c \
 		src/create_mountains_valley.c \
 		src/is_mouse_on_button.c \
+		src/brush_size.c \
 
 OBJ	=	$(SRC:.c=.o)
 

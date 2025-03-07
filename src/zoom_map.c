@@ -11,6 +11,8 @@ sfVector2f scale_iso_point(sfVector2f point, sfVector2f center, float scale)
 {
     sfVector2f scaled = {0.0, 0.0};
 
+    center.x = 1920.0 / 2;
+    center.y = 1080.0 / 2;
     point.x -= center.x;
     point.y -= center.y;
     scaled.x = point.x * scale;

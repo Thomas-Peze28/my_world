@@ -45,10 +45,10 @@ int draw_lines(sfVector2i id, window_t *win)
 {
     sfVertexArray *line = NULL;
 
-    if (id.x < SIZE_MAP - 1)
+    if (id.x < win->size_of_map - 1)
         line = create_line(&win->map_2d[id.y][id.x],
             &win->map_2d[id.y][id.x + 1]);
-    if (id.y < SIZE_MAP - 1)
+    if (id.y < win->size_of_map - 1)
         line = create_line(&win->map_2d[id.y][id.x],
             &win->map_2d[id.y + 1][id.x]);
     if (line) {
@@ -83,7 +83,7 @@ int draw_quads(sfVector2i id, window_t *win, layers_t *layers)
     };
     sfVertexArray *quad = NULL;
 
-    if (id.x < SIZE_MAP - 1 && id.y < SIZE_MAP - 1) {
+    if (id.x < win->size_of_map - 1 && id.y < win->size_of_map - 1) {
         quad = create_textured_quad(
             win->map_2d[id.y][id.x], win->map_2d[id.y][id.x + 1],
             win->map_2d[id.y + 1][id.x + 1], win->map_2d[id.y + 1][id.x]);
@@ -99,19 +99,19 @@ int draw_quads(sfVector2i id, window_t *win, layers_t *layers)
 void draw_2d_map(window_t *win, layers_t *layers)
 {
     int start_x = 0;
-    int end_x = SIZE_MAP;
+    int end_x = win->size_of_map;
     int start_y = 0;
-    int end_y = SIZE_MAP;
+    int end_y = win->size_of_map;
     int step_x = 1;
     int step_y = 1;
 
     if (win->angle_x > M_PI / 2 && win->angle_x < 3 * M_PI / 2) {
-        start_x = SIZE_MAP - 1;
+        start_x = win->size_of_map - 1;
         end_x = -1;
         step_x = -1;
     }
     if (win->angle_y > M_PI) {
-        start_y = SIZE_MAP - 1;
+        start_y = win->size_of_map - 1;
         end_y = -1;
         step_y = -1;
     }
