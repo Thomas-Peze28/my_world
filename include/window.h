@@ -81,5 +81,6 @@ window_t *create_mount_and_valley(sfVector2i mouse_pos, window_t *win, int y);
 window_t *create_flat(sfVector2i mouse_pos, window_t *win, int y);
 int is_mouse_on_button(sfSprite *sprite, sfVector2i mouse_pos);
 void manage_brush(window_t *win, sfEvent *event);
+void manage_moving(window_t *win, sfEvent *event);
 
 #endif

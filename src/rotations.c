@@ -23,7 +23,8 @@ sfVector2f **rotate_map(window_t *win)
             };
             projected = project_iso_point(point_3d, win->angle_x,
                 win->angle_y, center);
-            projected.x -= 0;
+            projected.x += win->offset_x;
+            projected.y += win->offset_y;
             win->map_2d[y][x] = projected;
         }
     }

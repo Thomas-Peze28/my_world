@@ -46,6 +46,7 @@ window_t *analyse_events(window_t *win, sfEvent *event)
             win->scale -= 0.05;
             win->map_2d = rotate_map(win);
         }
+        manage_moving(win, event);
         manage_brush(win, event);
         win = handle_rotations(event, win);
     }

@@ -60,6 +60,8 @@ window_t *create_struct(void)
     win->win = sfRenderWindow_create((sfVideoMode){WINDOW_WIDTH,
         WINDOW_HEIGHT, 32}, "My_world", sfDefaultStyle, NULL);
     win->scale = 1.00;
+    win->offset_x = 300;
+    win->offset_y = 0;
     return win;
 }
 
